@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for post in posts %}
+<article> 
+        <img src="{{ url_for('static', filename='img/' + post.img_name) }}" width="150" height="100">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.created_at }}</p>
+        <p>{{ post.body }}</p>
+        <a href="/{{ post.id }}/read" role="button">Read More</a>
+</article>
+{% endfor %}
+{% endblock %}
