@@ -164,7 +164,28 @@ def logout():
     logout_user()
     return redirect('login')
 
-if __name__ == '__main__':
+# アプリケーション起動時にデータベースを初期化
+def init_database():
     with app.app_context():
-        db.create_all()
+        try:
+            # テーブルが存在するかチェック
+            from sqlalchemy import inspect
+            inspector = inspect(db.engine)
+            existing_tables = inspector.get_table_names()
+            
+            if 'user' not in existing_tables or 'post' not in existing_tables:
+                print("Creating database tables...")
+                db.create_all()
+                print("Database tables created successfully!")
+            else:
+                print("Database tables already exist.")
+        except Exception as e:
+            print(f"Database initialization error: {e}")
+            import traceback
+            traceback.print_exc()
+
+# アプリケーション起動時に初期化
+init_database()
+
+if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)    
