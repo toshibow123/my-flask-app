@@ -24,20 +24,14 @@ if DATABASE_URL:
     # Neonやその他のクラウドデータベース用
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 else:
-    # ローカル開発用（フォールバック）
-    DB_INFO = {
-        'user':'postgres',
-        'password':'toshifumi4989',
-        'host':'localhost',
-        'name':'postgres'
-    }
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://{user}:{password}@{host}/{name}'.format(**DB_INFO)
-    app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+    # ローカル開発用（SQLiteを使用）
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskr.db'
 db.init_app(app)
 
 migrate = Migrate(app,db)
 
 class Post(db.Model):
+    __tablename__ = 'post'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(1000), nullable=False)
@@ -48,6 +42,7 @@ class Post(db.Model):
     img_name = db.Column(db.String(100),nullable=True)
 
 class User(UserMixin,db.Model):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
