@@ -2,8 +2,8 @@ name: flask-tutorial
 services:
   - name: web
     type: web
-    image: gunicorn
-    command: gunicorn myapp:app --bind 0.0.0.0:$PORT
+    image: python:3.11-slim
+    command: pip install -r requirements.txt && gunicorn myapp:app --bind 0.0.0.0:$PORT
     ports:
       - port: 8080
         targetPort: 8080

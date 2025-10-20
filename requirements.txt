@@ -3,5 +3,5 @@ gunicorn
 Flask-SQLAlchemy
 Flask-Migrate
 Flask-Login
-psycopg[binary]
+psycopg2-binary
 pytz

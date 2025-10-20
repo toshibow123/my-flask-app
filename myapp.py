@@ -31,7 +31,7 @@ else:
         'host':'localhost',
         'name':'postgres'
     }
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg://{user}:{password}@{host}/{name}'.format(**DB_INFO)
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://{user}:{password}@{host}/{name}'.format(**DB_INFO)
     app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 db.init_app(app)
 
@@ -163,4 +163,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect('login')    
+    return redirect('login')
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)    
