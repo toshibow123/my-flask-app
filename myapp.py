@@ -115,6 +115,10 @@ def delete(post_id):
     db.session.commit()
     return redirect("/admin")
 
+@app.route("/")
+def home():
+    return redirect("/index")
+
 @app.route("/index")
 def index():
     posts = Post.query.all()
