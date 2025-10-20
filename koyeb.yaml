@@ -1,0 +1,18 @@
+name: flask-tutorial
+services:
+  - name: web
+    type: web
+    image: gunicorn
+    command: gunicorn myapp:app --bind 0.0.0.0:$PORT
+    ports:
+      - port: 8080
+        targetPort: 8080
+        protocol: http
+    env:
+      - name: DATABASE_URL
+        value: ${{ secrets.DATABASE_URL }}
+      - name: SECRET_KEY
+        value: ${{ secrets.SECRET_KEY }}
+    resources:
+      cpu: 0.1
+      memory: 512Mi
